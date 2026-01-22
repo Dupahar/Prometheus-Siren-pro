@@ -1,0 +1,86 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment (IMPORTANT: Never commit API keys)
+.env
+.env.local
+.env.*.local
+
+# Logs and temp files
+logs/
+*.log
+*.txt
+verification.log
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Qdrant local data
+qdrant_data/
+
+# ML model checkpoints and large models (download separately)
+checkpoint-*/
+distilbert_threat/
+*.safetensors
+optimizer.pt
+
+# Hackathon PDFs and temporary files (not needed in repo)
+*.pdf
+*.zip
+
+# Old planning documents (keep only final report)
+implementation_plan.md
+phase2_implementation_plan.md
+phase3_implementation_plan.md
+commercialization_report.md
+commercialization_strategy.md
+system_flow.md
+
+# Generated HTML (PDF should be shared via Google Drive)
+report/*.html
+
+# Submission checklist (local use only)
+SUBMISSION_CHECKLIST.md

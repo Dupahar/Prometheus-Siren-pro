@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # -------------------------
+  # P-Brain (Control Plane)
+  # -------------------------
+  brain:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: uvicorn services.brain_service:app --host 0.0.0.0 --port 8001
+    ports:
+      - "8001:8001"
+    environment:
+      - QDRANT_HOST=qdrant
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - qdrant
+
+  # -------------------------
+  # P-Siren (Honeypot)
+  # -------------------------
+  siren:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: uvicorn services.siren_service:app --host 0.0.0.0 --port 8002
+    ports:
+      - "8002:8002"
+
+  # -------------------------
+  # P-Agent (Sidecar)
+  # -------------------------
+  agent:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: uvicorn services.agent_service:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - BRAIN_URL=http://brain:8001
+      - SIREN_URL=http://siren:8002
+      - APP_URL=http://host.docker.internal:5000 # Points to local app if running
+    depends_on:
+      - brain
+      - siren
+
+  # -------------------------
+  # Infrastructure
+  # -------------------------
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  # -------------------------
+  # Phase 2: The Injector
+  # -------------------------
+  injector:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: uvicorn services.injector_controller:app --host 0.0.0.0 --port 8443 # No SSL for local docker test
+    ports:
+      - "8443:8443"
+
+  # -------------------------
+  # Phase 3: The Dashboard
+  # -------------------------
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: uvicorn services.dashboard_service:app --host 0.0.0.0 --port 8080
+    ports:
+      - "8080:8080"
+
+volumes:
+  qdrant_data:
