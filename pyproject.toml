@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "prometheus-siren"
 version = "0.1.0"
-description = "Self-Evolving Cyber-Immune System - Convolve 4.0 Hackathon"
+description = "A Self-Evolving Cyber-Immune System powered by Qdrant and Gemini"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}

@@ -161,34 +161,9 @@ prometheus-siren/
 
 ---
 
-## 🏆 Hackathon Alignment (Convolve 4.0 - Qdrant MAS Track)
-
-| Requirement | Implementation |
-|-------------|----------------|
-| ✅ Qdrant as primary vector search | `attack_memory`, `code_chunks`, `global_blocklist` |
-| ✅ Search capability | Semantic attack pattern matching |
-| ✅ Memory capability | Long-term evolving threat knowledge |
-| ✅ Recommendation | AI-generated patch suggestions |
-| ✅ Multimodal | Text (payloads) + Code (vulnerabilities) |
-| ✅ Societal impact | Protecting public infrastructure |
-
----
-
-## 🔧 Configuration
-
-Create a `.env` file with:
-
-```env
-GEMINI_API_KEY=your_gemini_api_key
-QDRANT_URL=https://your-cluster.qdrant.io:6333
-QDRANT_API_KEY=your_qdrant_api_key
-```
-
----
-
 ## 📜 License
 
-MIT License - Built for Convolve 4.0
+MIT License
 
 ---
 
