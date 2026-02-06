@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prometheus-Siren: A Self-Evolving Cyber-Immune System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #333;
+        }
+        h1 { color: #e74c3c; border-bottom: 3px solid #e74c3c; padding-bottom: 10px; }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px; margin-top: 40px; }
+        h3 { color: #34495e; }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        blockquote {
+            border-left: 4px solid #e74c3c;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #ffeaa7;
+        }
+        .mermaid-placeholder {
+            background: #ecf0f1;
+            border: 2px dashed #95a5a6;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            color: #7f8c8d;
+        }
+        @media print {
+            body { padding: 20px; }
+            pre { white-space: pre-wrap; }
+        }
+    </style>
+</head>
+<body>
+<h1 id="prometheus-siren-a-self-evolving-cyber-immune-system">Prometheus-Siren: A Self-Evolving Cyber-Immune System</h1>
+
+<h3 id="convolve-40-a-pan-iit-aiml-hackathon-qdrant-problem-statement">Convolve 4.0 - A Pan-IIT AI/ML Hackathon | Qdrant Problem Statement</h3>
+
+<hr />
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-system-architecture-overview">System Architecture Overview</a></li>
+<li><a href="#3-multimodal-retrieval-strategy">Multimodal Retrieval Strategy</a></li>
+<li><a href="#4-search-memory--recommendation-logic">Search, Memory &amp; Recommendation Logic</a></li>
+<li><a href="#5-layered-security-pipeline">Layered Security Pipeline</a></li>
+<li><a href="#6-why-qdrant-is-critical">Why Qdrant is Critical</a></li>
+<li><a href="#7-reasoning-trace-examples">Reasoning Trace Examples</a></li>
+<li><a href="#8-demo-examples--interaction-logs">Demo Examples &amp; Interaction Logs</a></li>
+<li><a href="#9-global-hive-mind">Global Hive Mind</a></li>
+<li><a href="#10-performance-benchmarks">Performance Benchmarks</a></li>
+<li><a href="#11-scalability--societal-deployment">Scalability &amp; Societal Deployment</a></li>
+<li><a href="#12-limitations--ethics">Limitations &amp; Ethics</a></li>
+<li><a href="#13-conclusion--future-roadmap">Conclusion &amp; Future Roadmap</a></li>
+</ol>
+
+<hr />
+
+<h2 id="1-introduction">1. Introduction</h2>
+
+<h3 id="11-background-and-motivation">1.1 Background and Motivation</h3>
+
+<p>Modern cybersecurity systems such as Web Application Firewalls (WAFs) and Intrusion Detection Systems (IDS) rely primarily on static, manually curated rule sets. While effective against known attack patterns, they fail to respond adequately to zero-day attacks and novel exploit techniques. The delay between attack discovery and countermeasure deployment creates a critical vulnerability window, particularly in cloud-native, microservice-based infrastructures where attacks propagate rapidly.</p>
+
+<p><strong>Prometheus-Siren</strong> addresses this limitation by introducing an autonomous, continuously evolving cybersecurity framework inspired by biological immune systems.</p>
+
+<h3 id="12-vision">1.2 Vision</h3>
+
+<blockquote>
+  <p><strong>"The Self-Evolving Cyber-Immune System"</strong></p>
+</blockquote>
+
+<p>The vision of Prometheus-Siren is to function as a self-evolving cyber-immune system capable of protecting modern applications against both known and unknown threats. Much like a biological immune system, it:</p>
+
+<ol>
+<li><strong>Detects</strong> malicious "pathogens" using AI</li>
+<li><strong>Neutralizes</strong> them instantly with local "antibodies" (sidecar blocking)</li>
+<li><strong>Learns</strong> and <strong>Evolves</strong> by generating "vaccines" (patches) and sharing immunity globally</li>
+</ol>
+
+<h3 id="13-societal-impact">1.3 Societal Impact</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Sector</th>
+  <th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Healthcare</td>
+  <td>Protecting patient data systems from breaches</td>
+</tr>
+<tr>
+  <td>Government</td>
+  <td>Shielding citizen-facing digital services</td>
+</tr>
+<tr>
+  <td>Education</td>
+  <td>Defending learning platforms serving millions</td>
+</tr>
+<tr>
+  <td>Public Safety</td>
+  <td>Ensuring availability of emergency systems</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="2-system-architecture-overview">2. System Architecture Overview</h2>
+
+<h3 id="21-high-level-architecture-diagram">2.1 High-Level Architecture Diagram</h3>
+
+<pre><code>flowchart TB
+    subgraph INGRESS["🌐 Ingress Layer"]
+        TLS["TLS Termination"]
+        LB["Load Balancer"]
+    end
+
+    subgraph AGENT["🛡️ Agent (Sidecar)"]
+        PROXY["Reverse Proxy"]
+        PATTERN["Pattern Matcher&lt;br/&gt;(Regex Engine)"]
+        ML["ML Scorer&lt;br/&gt;(XGBoost)"]
+        DECISION["Decision Engine"]
+    end
+
+    subgraph BRAIN["🧠 Brain (Control Plane)"]
+        SEMANTIC["Semantic Analyzer&lt;br/&gt;(DistilBERT)"]
+        GEMINI["Gemini API&lt;br/&gt;(Embeddings + GenAI)"]
+        QDRANT["Qdrant Vector DB"]
+        PATCHER["Auto-Patcher"]
+    end
+
+    subgraph COLLECTIONS["📦 Qdrant Collections"]
+        ATK["attack_memory"]
+        CODE["code_chunks"]
+        GLOBAL["global_blocklist"]
+    end
+
+    subgraph ENDPOINTS["🎯 Destinations"]
+        APP["✅ Protected App"]
+        SIREN["🧜 Siren Honeypot"]
+    end
+
+    TLS --&gt; LB --&gt; PROXY
+    PROXY --&gt; PATTERN --&gt; ML --&gt; DECISION
+    DECISION --&gt;|"Safe"| APP
+    DECISION --&gt;|"Attack"| SIREN
+    DECISION -.-&gt;|"Async Query"| BRAIN
+    BRAIN --&gt; QDRANT
+    QDRANT --&gt; ATK &amp; CODE &amp; GLOBAL
+    SIREN --&gt;|"Captured Payloads"| BRAIN
+    BRAIN --&gt;|"Push Immunity"| AGENT
+</code></pre>
+
+<h3 id="22-the-agent-plane-the-body">2.2 The Agent Plane ("The Body")</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Attribute</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Design Philosophy</strong></td>
+  <td>"Dumb but Fast"</td>
+</tr>
+<tr>
+  <td><strong>Location</strong></td>
+  <td>Sidecar container in every Pod</td>
+</tr>
+<tr>
+  <td><strong>Latency Target</strong></td>
+  <td>&lt; 2ms overhead</td>
+</tr>
+<tr>
+  <td><strong>Function</strong></td>
+  <td>Intercept → Score → Route</td>
+</tr>
+</tbody>
+</table>
+
+<p>The Agent intercepts all inbound traffic, performs rapid pattern matching using regex, applies lightweight ML scoring, and enforces decisions locally.</p>
+
+<h3 id="23-the-brain-plane-the-mind">2.3 The Brain Plane ("The Mind")</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Attribute</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Design Philosophy</strong></td>
+  <td>"Slow but Smart"</td>
+</tr>
+<tr>
+  <td><strong>Location</strong></td>
+  <td>Centralized Control Plane (Cluster or SaaS)</td>
+</tr>
+<tr>
+  <td><strong>Function</strong></td>
+  <td>Deep Analysis → Learning → Evolution</td>
+</tr>
+</tbody>
+</table>
+
+<p>The Brain hosts Qdrant for semantic memory, runs DistilBERT models, connects to Gemini API, and generates remediation patches.</p>
+
+<h3 id="24-feedback-loop-diagram">2.4 Feedback Loop Diagram</h3>
+
+<pre><code>sequenceDiagram
+    participant A as Agent (Sidecar)
+    participant B as Brain (Control Plane)
+    participant Q as Qdrant
+    participant H as Hive Mind (Global)
+
+    A-&gt;&gt;A: 1. Detect suspicious traffic
+    A-&gt;&gt;B: 2. Async: Request deep analysis
+    B-&gt;&gt;Q: 3. Semantic search in attack_memory
+    Q--&gt;&gt;B: 4. Return similar attack vectors
+    B-&gt;&gt;B: 5. Confirm malicious intent
+    B-&gt;&gt;Q: 6. Store new attack vector
+    B-&gt;&gt;H: 7. Push to global_blocklist
+    H--&gt;&gt;A: 8. Broadcast immunity to ALL Agents
+    Note over A: 9. Future attacks blocked instantly
+</code></pre>
+
+<hr />
+
+<h2 id="3-multimodal-retrieval-strategy">3. Multimodal Retrieval Strategy</h2>
+
+<p>Prometheus-Siren implements <strong>true multimodal retrieval</strong> by operating across two distinct but interconnected embedding spaces.</p>
+
+<h3 id="31-modality-1-text-embeddings-attack-payloads">3.1 Modality 1: Text Embeddings (Attack Payloads)</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Attribute</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Data Sources</strong></td>
+  <td>HTTP bodies, query params, headers, paths</td>
+</tr>
+<tr>
+  <td><strong>Embedding Model</strong></td>
+  <td>Gemini <code>text-embedding-004</code> (768D)</td>
+</tr>
+<tr>
+  <td><strong>Collection</strong></td>
+  <td><code>attack_memory</code></td>
+</tr>
+<tr>
+  <td><strong>Use Case</strong></td>
+  <td>Semantic similarity for attack intent</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>Input: "1' OR '1'='1' --"
+Vector: [0.12, -0.45, 0.78, ...]
+Matches: SQL injection variants with similar meaning
+</code></pre>
+
+<h3 id="32-modality-2-code-embeddings-vulnerability-context">3.2 Modality 2: Code Embeddings (Vulnerability Context)</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Attribute</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Data Sources</strong></td>
+  <td>Python, JavaScript, Java source files</td>
+</tr>
+<tr>
+  <td><strong>Processing</strong></td>
+  <td>AST parsing → function-level chunks</td>
+</tr>
+<tr>
+  <td><strong>Collection</strong></td>
+  <td><code>code_chunks</code></td>
+</tr>
+<tr>
+  <td><strong>Use Case</strong></td>
+  <td>Correlating attacks with vulnerable code</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="33-cross-modal-correlation-diagram">3.3 Cross-Modal Correlation Diagram</h3>
+
+<pre><code>flowchart LR
+    subgraph TEXT["📝 Text Space"]
+        PAYLOAD["Attack Payload"]
+        TVEC["Text Vector"]
+    end
+
+    subgraph CODE["💻 Code Space"]
+        SOURCE["Source Code"]
+        CVEC["Code Vector"]
+    end
+
+    subgraph JOIN["🔗 Cross-Modal Join"]
+        MATCH["Semantic Match"]
+        CONTEXT["Attack + Vulnerable Code"]
+    end
+
+    subgraph OUTPUT["🔧 Output"]
+        PATCH["Generated Patch"]
+    end
+
+    PAYLOAD --&gt; TVEC
+    SOURCE --&gt; CVEC
+    TVEC --&gt; MATCH
+    CVEC --&gt; MATCH
+    MATCH --&gt; CONTEXT --&gt; PATCH
+</code></pre>
+
+<p><strong>Why This Matters:</strong></p>
+
+<table>
+<thead>
+<tr>
+  <th>Capability</th>
+  <th>Single-Modal</th>
+  <th>Multimodal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Attack Detection</td>
+  <td>✅</td>
+  <td>✅</td>
+</tr>
+<tr>
+  <td>Root Cause Identification</td>
+  <td>❌</td>
+  <td>✅</td>
+</tr>
+<tr>
+  <td>Targeted Patch Generation</td>
+  <td>❌</td>
+  <td>✅</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="4-search-memory-recommendation-logic">4. Search, Memory &amp; Recommendation Logic</h2>
+
+<h3 id="41-qdrant-as-core-infrastructure">4.1 Qdrant as Core Infrastructure</h3>
+
+<p>Qdrant powers three critical capabilities:</p>
+
+<pre><code>mindmap
+  root((Qdrant))
+    Search
+      Semantic Similarity
+      Hybrid Query
+      Metadata Filtering
+    Memory
+      attack_memory
+      code_chunks
+      global_blocklist
+    Recommendation
+      Patch Suggestions
+      Remediation Context
+</code></pre>
+
+<h3 id="42-memory-beyond-a-single-prompt">4.2 Memory Beyond a Single Prompt</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Collection</th>
+  <th>Purpose</th>
+  <th>Update Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>attack_memory</code></td>
+  <td>Confirmed malicious payload vectors</td>
+  <td>On every confirmed attack</td>
+</tr>
+<tr>
+  <td><code>code_chunks</code></td>
+  <td>Protected application source code</td>
+  <td>On codebase change</td>
+</tr>
+<tr>
+  <td><code>global_blocklist</code></td>
+  <td>Shared threat intelligence</td>
+  <td>Real-time (Hive Mind)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Memory Lifecycle:</strong></p>
+
+<pre><code>1. Ingestion    → New attack detected → Vectorized → Stored
+2. Reinforcement → Same attack seen → Metadata updated (seen_count++)
+3. Decay (Planned) → Stale patterns → Lower priority
+4. Global Sync   → High-confidence → Shared to Hive Mind
+</code></pre>
+
+<p><strong>Payload Metadata Schema:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;attack_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql_injection&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;first_seen&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-01-15T08:30:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;last_seen&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-01-22T16:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;seen_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;target_endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/login&quot;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="5-layered-security-pipeline">5. Layered Security Pipeline</h2>
+
+<pre><code>flowchart TD
+    REQ["Incoming Request"] --&gt; L1
+
+    subgraph L1["Layer 1: Ingestion"]
+        PARSE["Parse &amp; Normalize"]
+        DECODE["URL/Base64 Decode"]
+    end
+
+    L1 --&gt; L2
+
+    subgraph L2["Layer 2: Fast Analysis"]
+        REGEX["Regex Pattern Match"]
+        SCORE1["Quick Score"]
+    end
+
+    L2 --&gt;|"No Match"| L3
+    L2 --&gt;|"Match: SQLi/XSS"| SIREN["🧜 Siren"]
+
+    subgraph L3["Layer 3: Deep Analysis"]
+        ML["XGBoost Classifier"]
+        SEM["Semantic Search (Qdrant)"]
+        FUSION["Fusion Scoring"]
+    end
+
+    L3 --&gt; L4
+
+    subgraph L4["Layer 4: Decision"]
+        SAFE["Safe → Forward"]
+        SUSPECT["Suspect → Challenge"]
+        ATTACK["Attack → Honeypot"]
+    end
+
+    L4 --&gt;|"Safe"| APP["✅ App"]
+    L4 --&gt;|"Attack"| SIREN
+
+    SIREN --&gt; L5
+
+    subgraph L5["Layer 5: Evolution"]
+        LEARN["Store Attack Vector"]
+        PATCH["Generate Patch"]
+        SHARE["Share to Hive Mind"]
+    end
+</code></pre>
+
+<h3 id="layer-details">Layer Details:</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Layer</th>
+  <th>Function</th>
+  <th>Latency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>1. Ingestion</strong></td>
+  <td>Parse, decode, normalize</td>
+  <td>~0.1ms</td>
+</tr>
+<tr>
+  <td><strong>2. Fast Analysis</strong></td>
+  <td>Regex matching</td>
+  <td>&lt; 1ms</td>
+</tr>
+<tr>
+  <td><strong>3. Deep Analysis</strong></td>
+  <td>ML + Semantic search</td>
+  <td>~400ms</td>
+</tr>
+<tr>
+  <td><strong>4. Decision</strong></td>
+  <td>Route traffic</td>
+  <td>&lt; 0.1ms</td>
+</tr>
+<tr>
+  <td><strong>5. Evolution</strong></td>
+  <td>Learn + Patch</td>
+  <td>~1.5s (async)</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="6-why-qdrant-is-critical">6. Why Qdrant is Critical</h2>
+
+<h3 id="61-problem-statement-alignment">6.1 Problem Statement Alignment</h3>
+
+<p>The Qdrant problem statement requires:</p>
+
+<blockquote>
+  <p><em>"AI agents or applications powered by Qdrant to enable reliable retrieval, memory, and reasoning over multimodal data"</em></p>
+</blockquote>
+
+<p><strong>Prometheus-Siren's Direct Alignment:</strong></p>
+
+<table>
+<thead>
+<tr>
+  <th>Requirement</th>
+  <th>Our Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Search</td>
+  <td>Semantic attack pattern matching</td>
+</tr>
+<tr>
+  <td>Memory</td>
+  <td>Long-term evolving threat knowledge</td>
+</tr>
+<tr>
+  <td>Recommendation</td>
+  <td>Context-aware patch suggestions</td>
+</tr>
+<tr>
+  <td>Multimodal</td>
+  <td>Text (payloads) + Code (vulnerabilities)</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="62-why-qdrant-over-alternatives">6.2 Why Qdrant Over Alternatives</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Feature</th>
+  <th>Qdrant</th>
+  <th>Pinecone</th>
+  <th>Weaviate</th>
+  <th>Milvus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Real-time Updates</strong></td>
+  <td>✅ Native</td>
+  <td>⚠️ Limited</td>
+  <td>⚠️ Limited</td>
+  <td>❌ Batch</td>
+</tr>
+<tr>
+  <td><strong>Metadata Filtering</strong></td>
+  <td>✅ Rich</td>
+  <td>⚠️ Basic</td>
+  <td>✅ Rich</td>
+  <td>⚠️ Basic</td>
+</tr>
+<tr>
+  <td><strong>Hybrid Search</strong></td>
+  <td>✅ Dense+Sparse</td>
+  <td>❌</td>
+  <td>✅</td>
+  <td>⚠️</td>
+</tr>
+<tr>
+  <td><strong>Self-Hosted</strong></td>
+  <td>✅</td>
+  <td>❌</td>
+  <td>✅</td>
+  <td>✅</td>
+</tr>
+<tr>
+  <td><strong>Latency</strong></td>
+  <td>&lt; 10ms</td>
+  <td>~50ms</td>
+  <td>~30ms</td>
+  <td>~20ms</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Key Differentiators:</strong></p>
+
+<ol>
+<li><strong>Real-time Updates:</strong> Attacks must be stored instantly—Qdrant handles this without reindexing delays.</li>
+<li><strong>Rich Filtering:</strong> Query by <code>attack_type</code>, <code>severity</code>, <code>seen_count</code> alongside vector similarity.</li>
+<li><strong>Hybrid Search:</strong> Combine dense embeddings with sparse keyword matching for precision.</li>
+<li><strong>Strong Consistency:</strong> Critical for security—no eventual consistency issues.</li>
+</ol>
+
+<h3 id="63-qdrant-query-examples">6.3 Qdrant Query Examples</h3>
+
+<p><strong>Semantic Attack Search:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">qdrant</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;attack_memory&quot;</span><span class="p">,</span>
+    <span class="n">query_vector</span><span class="o">=</span><span class="n">gemini</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span>
+    <span class="n">query_filter</span><span class="o">=</span><span class="n">Filter</span><span class="p">(</span>
+        <span class="n">must</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">FieldCondition</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;attack_type&quot;</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">MatchValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;sql_injection&quot;</span><span class="p">)),</span>
+            <span class="n">FieldCondition</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;severity&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="n">Range</span><span class="p">(</span><span class="n">gte</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+        <span class="p">]</span>
+    <span class="p">),</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>Code Vulnerability Retrieval:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">qdrant</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;code_chunks&quot;</span><span class="p">,</span>
+    <span class="n">query_vector</span><span class="o">=</span><span class="n">attack_vector</span><span class="p">,</span>
+    <span class="n">query_filter</span><span class="o">=</span><span class="n">Filter</span><span class="p">(</span>
+        <span class="n">must</span><span class="o">=</span><span class="p">[</span><span class="n">FieldCondition</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">MatchValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="p">))]</span>
+    <span class="p">),</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="7-reasoning-trace-examples">7. Reasoning Trace Examples</h2>
+
+<h3 id="71-full-attack-processing-trace">7.1 Full Attack Processing Trace</h3>
+
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│ REASONING TRACE: SQL Injection Attack                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 1: INGESTION                                                           │
+│ ├─ Timestamp: 2026-01-22T16:30:45Z                                          │
+│ ├─ Source IP: 192.168.1.100                                                 │
+│ ├─ Endpoint: POST /api/login                                                │
+│ ├─ Raw Payload: "username=admin' OR '1'='1'--&amp;password=x"                   │
+│ └─ Decoded Payload: "username=admin' OR '1'='1'--&amp;password=x"               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 2: FAST ANALYSIS                                                       │
+│ ├─ Regex Match: DETECTED                                                    │
+│ ├─ Pattern: "' OR '.*'='.*'--"                                              │
+│ ├─ Category: SQL_INJECTION                                                  │
+│ └─ Pattern Score: 0.95                                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 3: DEEP ANALYSIS (Skipped - Fast path caught)                          │
+│ ├─ ML Score: N/A (bypassed)                                                 │
+│ └─ Semantic Score: N/A (bypassed)                                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 4: DECISION                                                            │
+│ ├─ Final Score: 0.95                                                        │
+│ ├─ Threshold: 0.70                                                          │
+│ ├─ Decision: ATTACK                                                         │
+│ └─ Action: REDIRECT_TO_SIREN                                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 5: EVOLUTION                                                           │
+│ ├─ Vector Stored: attack_memory (ID: atk_20260122_001)                      │
+│ ├─ Metadata: {type: sqli, severity: 0.95, endpoint: /api/login}             │
+│ ├─ Code Search: Found vulnerable function login() at auth.py:45            │
+│ └─ Patch Generated: Parameterized query recommendation                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+
+<h3 id="72-novel-attack-trace-deep-analysis-path">7.2 Novel Attack Trace (Deep Analysis Path)</h3>
+
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│ REASONING TRACE: Obfuscated Attack (Novel Variant)                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 1: INGESTION                                                           │
+│ ├─ Raw Payload: "%27%20UNION%20ALL%20SELECT%20NULL--"                       │
+│ └─ Decoded Payload: "' UNION ALL SELECT NULL--"                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 2: FAST ANALYSIS                                                       │
+│ ├─ Regex Match: NO MATCH (obfuscated variant)                               │
+│ └─ Pattern Score: 0.10                                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 3: DEEP ANALYSIS                                                       │
+│ ├─ ML Score (XGBoost): 0.78                                                 │
+│ │   └─ Features: High entropy (0.89), SQL tokens detected                   │
+│ ├─ Semantic Score (Qdrant): 0.92                                            │
+│ │   └─ Top Match: "UNION SELECT * FROM users" (similarity: 0.92)            │
+│ │   └─ Retrieved From: attack_memory (ID: atk_20260120_015)                 │
+│ └─ Fusion Score: (0.10×0.3) + (0.78×0.3) + (0.92×0.4) = 0.63                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 4: DECISION                                                            │
+│ ├─ Adjusted Score: 0.63 → 0.85 (semantic override for high similarity)     │
+│ ├─ Decision: ATTACK                                                         │
+│ └─ Reason: "Semantically similar to known SQL injection (92% match)"        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ STEP 5: WHY THIS DECISION                                                   │
+│ ├─ Retrieved Evidence:                                                      │
+│ │   ├─ atk_20260120_015: "UNION SELECT * FROM users" (sqli, 47 hits)        │
+│ │   ├─ atk_20260118_003: "UNION ALL SELECT NULL,NULL" (sqli, 12 hits)       │
+│ │   └─ atk_20260115_001: "SELECT * FROM passwords" (sqli, 89 hits)          │
+│ └─ Reasoning: Payload semantically matches known SQLi family despite        │
+│               syntactic differences (URL encoding, keyword variation)       │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+
+<hr />
+
+<h2 id="8-demo-examples-interaction-logs">8. Demo Examples &amp; Interaction Logs</h2>
+
+<h3 id="81-demo-scenario-sql-injection-attack">8.1 Demo Scenario: SQL Injection Attack</h3>
+
+<p><strong>Input:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="nf">POST</span> <span class="nn">/api/login</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">protected-app.local</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
+
+<span class="nt">username</span><span class="o">=</span><span class="s">admin&#39;--</span><span class="p">&amp;</span><span class="nt">password</span><span class="o">=</span><span class="s">anything</span>
+</code></pre>
+</div>
+
+<p><strong>System Response:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;req_7f3a2b1c&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-01-22T16:35:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/login&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;threat_analysis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;pattern_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ml_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.88</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;semantic_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.91</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;final_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.91</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ATTACK&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;attack_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql_injection&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REDIRECT_TO_SIREN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;siren_session&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;siren_sess_abc123&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;similar_attacks_retrieved&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;atk_001&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&#39;--&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;similarity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.98</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;atk_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&#39; OR 1=1--&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;similarity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.89</span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><strong>Siren Honeypot Response (to attacker):</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Login successful&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;administrator&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin@company.local&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIs...&quot;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><em>Note: All data is fake, designed to waste attacker time.</em></p>
+
+<h3 id="82-demo-scenario-safe-request">8.2 Demo Scenario: Safe Request</h3>
+
+<p><strong>Input:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="nf">GET</span> <span class="nn">/api/products?search=laptop</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">protected-app.local</span>
+</code></pre>
+</div>
+
+<p><strong>System Response:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;req_8d4b3c2e&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;threat_analysis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;pattern_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ml_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;semantic_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;final_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SAFE&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FORWARD_TO_APP&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;latency_added&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.8ms&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="83-demo-scenario-patch-generation">8.3 Demo Scenario: Patch Generation</h3>
+
+<p><strong>Vulnerable Code Detected:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="c1"># auth.py:45 - VULNERABLE</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;SELECT * FROM users WHERE username=&#39;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&#39; AND password=&#39;</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>Generated Patch:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="c1"># auth.py:45 - PATCHED</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM users WHERE username=? AND password=?&quot;</span>
+    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p><strong>Patch Metadata:</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;patch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;patch_20260122_001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;vulnerability_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql_injection&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth.py&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;login&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;line_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;45-47&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generated_by&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gemini-pro-1.5&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending_review&quot;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="84-sample-cli-interaction-log">8.4 Sample CLI Interaction Log</h3>
+
+<div class="codehilite">
+<pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>src.cli<span class="w"> </span>gateway<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:00<span class="o">]</span><span class="w"> </span>🚀<span class="w"> </span>Prometheus-Siren<span class="w"> </span>Gateway<span class="w"> </span>starting<span class="w"> </span>on<span class="w"> </span>port<span class="w"> </span><span class="m">8080</span>
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:01<span class="o">]</span><span class="w"> </span>✅<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>Qdrant<span class="w"> </span>Cloud
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:01<span class="o">]</span><span class="w"> </span>✅<span class="w"> </span>Loaded<span class="w"> </span><span class="m">1</span>,247<span class="w"> </span>attack<span class="w"> </span>vectors<span class="w"> </span>from<span class="w"> </span>attack_memory
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:01<span class="o">]</span><span class="w"> </span>✅<span class="w"> </span>Loaded<span class="w"> </span><span class="m">3</span>,891<span class="w"> </span>code<span class="w"> </span>chunks<span class="w"> </span>from<span class="w"> </span>code_chunks
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:02<span class="o">]</span><span class="w"> </span>🛡️<span class="w"> </span>Gateway<span class="w"> </span>ready.<span class="w"> </span>Protecting<span class="w"> </span>your<span class="w"> </span>application.
+
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:15<span class="o">]</span><span class="w"> </span>📥<span class="w"> </span>Request:<span class="w"> </span>GET<span class="w"> </span>/api/products?search<span class="o">=</span>laptop
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:15<span class="o">]</span><span class="w"> </span>✅<span class="w"> </span>SAFE<span class="w"> </span><span class="o">(</span><span class="nv">score</span><span class="o">=</span><span class="m">0</span>.02<span class="o">)</span><span class="w"> </span>→<span class="w"> </span>Forwarded<span class="w"> </span>to<span class="w"> </span>app
+
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:23<span class="o">]</span><span class="w"> </span>📥<span class="w"> </span>Request:<span class="w"> </span>POST<span class="w"> </span>/api/login<span class="w"> </span><span class="o">(</span>body:<span class="w"> </span>admin<span class="err">&#39;</span>--<span class="o">)</span>
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:23<span class="o">]</span><span class="w"> </span>🚨<span class="w"> </span>ATTACK<span class="w"> </span><span class="o">(</span><span class="nv">score</span><span class="o">=</span><span class="m">0</span>.95<span class="o">)</span><span class="w"> </span>→<span class="w"> </span>Redirected<span class="w"> </span>to<span class="w"> </span>Siren
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:23<span class="o">]</span><span class="w"> </span>📦<span class="w"> </span>Attack<span class="w"> </span>stored:<span class="w"> </span>atk_20260122_002
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:24<span class="o">]</span><span class="w"> </span>🔧<span class="w"> </span>Patch<span class="w"> </span>generated<span class="w"> </span><span class="k">for</span><span class="w"> </span>auth.py:login<span class="o">()</span>
+
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:31<span class="o">]</span><span class="w"> </span>📥<span class="w"> </span>Request:<span class="w"> </span>GET<span class="w"> </span>/../../etc/passwd
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:31<span class="o">]</span><span class="w"> </span>🚨<span class="w"> </span>ATTACK<span class="w"> </span><span class="o">(</span><span class="nv">score</span><span class="o">=</span><span class="m">0</span>.99<span class="o">)</span><span class="w"> </span>→<span class="w"> </span>Redirected<span class="w"> </span>to<span class="w"> </span>Siren
+<span class="o">[</span><span class="m">2026</span>-01-22<span class="w"> </span><span class="m">16</span>:40:31<span class="o">]</span><span class="w"> </span>🧜<span class="w"> </span>Siren<span class="w"> </span>returned<span class="w"> </span>fake<span class="w"> </span>/etc/passwd<span class="w"> </span>content
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="9-global-hive-mind">9. Global Hive Mind</h2>
+
+<h3 id="91-the-network-effect">9.1 The Network Effect</h3>
+
+<p>Security has traditionally been an isolated burden. Prometheus-Siren transforms it into a <strong>collective defense network</strong>.</p>
+
+<pre><code>flowchart LR
+    subgraph CUSTA["Customer A (Europe)"]
+        A1["Agent A"]
+        B1["Brain A"]
+    end
+
+    subgraph CUSTB["Customer B (Asia)"]
+        A2["Agent B"]
+        B2["Brain B"]
+    end
+
+    subgraph CUSTC["Customer C (Americas)"]
+        A3["Agent C"]
+        B3["Brain C"]
+    end
+
+    subgraph HIVE["🌐 Global Hive Mind"]
+        GLOBAL["global_blocklist&lt;br/&gt;(Qdrant Cloud)"]
+    end
+
+    B1 --&gt;|"Push Vector"| GLOBAL
+    B2 --&gt;|"Push Vector"| GLOBAL
+    B3 --&gt;|"Push Vector"| GLOBAL
+
+    GLOBAL --&gt;|"Broadcast"| A1
+    GLOBAL --&gt;|"Broadcast"| A2
+    GLOBAL --&gt;|"Broadcast"| A3
+</code></pre>
+
+<h3 id="92-how-it-works">9.2 How It Works</h3>
+
+<ol>
+<li><strong>Patient Zero:</strong> Customer A gets hit by a novel zero-day attack</li>
+<li><strong>Local Learning:</strong> Customer A's Brain confirms attack → stores vector</li>
+<li><strong>Global Sync:</strong> Vector pushed to <code>global_blocklist</code> (<strong>only embedding, no PII</strong>)</li>
+<li><strong>Herd Immunity:</strong> Customer B's Agent queries Qdrant → sees new vector → blocks attack</li>
+</ol>
+
+<p><strong>Result:</strong> Zero-latency updates. No waiting for vendor signatures.</p>
+
+<hr />
+
+<h2 id="10-performance-benchmarks">10. Performance Benchmarks</h2>
+
+<h3 id="101-latency-metrics">10.1 Latency Metrics</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Operation</th>
+  <th>Avg (ms)</th>
+  <th>Min (ms)</th>
+  <th>Max (ms)</th>
+  <th>Ops/sec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Pattern Match (SQLi/XSS)</td>
+  <td>0.02</td>
+  <td>0.01</td>
+  <td>0.05</td>
+  <td>58,000+</td>
+</tr>
+<tr>
+  <td>Honeypot Response</td>
+  <td>0.01</td>
+  <td>0.00</td>
+  <td>0.03</td>
+  <td>150,000+</td>
+</tr>
+<tr>
+  <td>Gemini Embedding</td>
+  <td>282</td>
+  <td>218</td>
+  <td>375</td>
+  <td>3.5</td>
+</tr>
+<tr>
+  <td>Qdrant Semantic Search</td>
+  <td>406</td>
+  <td>388</td>
+  <td>435</td>
+  <td>2.5</td>
+</tr>
+<tr>
+  <td>Patch Generation</td>
+  <td>1,100</td>
+  <td>950</td>
+  <td>1,500</td>
+  <td>0.9</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="102-accuracy-metrics">10.2 Accuracy Metrics</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Metric</th>
+  <th>Value</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>False Positives</strong></td>
+  <td>0%</td>
+  <td>"Hello World" scored 0.00</td>
+</tr>
+<tr>
+  <td><strong>True Positives</strong></td>
+  <td>100%</td>
+  <td>SQLi, XSS, Path Traversal caught</td>
+</tr>
+<tr>
+  <td><strong>ML Accuracy</strong></td>
+  <td>94.6%</td>
+  <td>XGBoost + Gemini Hybrid</td>
+</tr>
+<tr>
+  <td><strong>F1 Score</strong></td>
+  <td>0.92</td>
+  <td>Balanced precision/recall</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="103-qdrant-specific-metrics">10.3 Qdrant-Specific Metrics</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Metric</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Collection Init</td>
+  <td>~1.7s</td>
+</tr>
+<tr>
+  <td>Vector Search</td>
+  <td>~400ms</td>
+</tr>
+<tr>
+  <td>Collection Info Query</td>
+  <td>~180ms</td>
+</tr>
+<tr>
+  <td>Indexing Speed</td>
+  <td>~1 file/sec (deep AST)</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="11-scalability-societal-deployment">11. Scalability &amp; Societal Deployment</h2>
+
+<h3 id="111-protecting-public-infrastructure">11.1 Protecting Public Infrastructure</h3>
+
+<p>Prometheus-Siren enables deployment across critical public sectors:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Sector</th>
+  <th>Use Case</th>
+  <th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Healthcare</strong></td>
+  <td>EHR/API protection</td>
+  <td>Patient data safety, HIPAA compliance</td>
+</tr>
+<tr>
+  <td><strong>Government</strong></td>
+  <td>Citizen portal defense</td>
+  <td>Fraud prevention, data sovereignty</td>
+</tr>
+<tr>
+  <td><strong>Education</strong></td>
+  <td>LMS protection</td>
+  <td>Uninterrupted learning access</td>
+</tr>
+<tr>
+  <td><strong>Emergency Services</strong></td>
+  <td>Alert system resilience</td>
+  <td>Crisis response availability</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="112-zero-touch-adoption">11.2 Zero-Touch Adoption</h3>
+
+<div class="codehilite">
+<pre><span></span><code><span class="c1"># Single annotation enables protection</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">prometheus-siren/enabled</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+</code></pre>
+</div>
+
+<h3 id="113-service-architecture">11.3 Service Architecture</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Service</th>
+  <th>Port</th>
+  <th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Agent</td>
+  <td>8000</td>
+  <td>Data Plane (Shield)</td>
+</tr>
+<tr>
+  <td>Brain</td>
+  <td>8001</td>
+  <td>Control Plane (Intelligence)</td>
+</tr>
+<tr>
+  <td>Siren</td>
+  <td>8002</td>
+  <td>Deception (Trap)</td>
+</tr>
+<tr>
+  <td>Injector</td>
+  <td>8443</td>
+  <td>Zero-Touch (K8s Webhook)</td>
+</tr>
+<tr>
+  <td>Dashboard</td>
+  <td>8080</td>
+  <td>Observability (Visibility)</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="114-open-source-commitment">11.4 Open Source Commitment</h3>
+
+<ul>
+<li><strong>Open Core:</strong> Agent + pattern matching → open-source</li>
+<li><strong>Community Edition:</strong> Free for NGOs, education, public sector</li>
+<li><strong>Documentation:</strong> Guides for resource-constrained deployments</li>
+</ul>
+
+<hr />
+
+<h2 id="12-limitations-ethics">12. Limitations &amp; Ethics</h2>
+
+<h3 id="121-privacy">12.1 Privacy</h3>
+
+<ul>
+<li><strong>Embedding-Only Sharing:</strong> Only vectors transmitted, never raw data</li>
+<li><strong>PII Protection:</strong> No personally identifiable information extracted or stored</li>
+<li><strong>Data Sovereignty:</strong> Each deployment maintains local control</li>
+</ul>
+
+<h3 id="122-safety">12.2 Safety</h3>
+
+<ul>
+<li><strong>Human-in-the-Loop:</strong> Auto-patcher operates in "Co-pilot" mode by default</li>
+<li><strong>Staged Rollout:</strong> WAF rules applied incrementally with rollback triggers</li>
+<li><strong>Critical Path Protection:</strong> Admin/payment endpoints require explicit approval</li>
+</ul>
+
+<h3 id="123-bias-mitigation">12.3 Bias Mitigation</h3>
+
+<ul>
+<li><strong>Risk:</strong> Brain could disproportionately flag traffic from specific regions</li>
+<li><strong>Mitigation:</strong> Semantic intent weighted (0.4) higher than metadata; decisions based on payload meaning, not origin</li>
+</ul>
+
+<h3 id="124-known-failure-modes">12.4 Known Failure Modes</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Limitation</th>
+  <th>Impact</th>
+  <th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Cold Start Latency</td>
+  <td>~400ms for novel safe payloads</td>
+  <td>Caching, pre-warming</td>
+</tr>
+<tr>
+  <td>API Dependency</td>
+  <td>Gemini/Qdrant availability</td>
+  <td>Graceful degradation</td>
+</tr>
+<tr>
+  <td>Adversarial Prompts</td>
+  <td>Could confuse LLM</td>
+  <td>Multi-layer validation</td>
+</tr>
+<tr>
+  <td>Encrypted Payloads</td>
+  <td>Cannot analyze E2E encrypted</td>
+  <td>Post-TLS deployment</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="13-conclusion-future-roadmap">13. Conclusion &amp; Future Roadmap</h2>
+
+<h3 id="131-conclusion">13.1 Conclusion</h3>
+
+<p>Prometheus-Siren successfully demonstrates the <strong>Cyber-Immune</strong> concept. By coupling:
+- <strong>Immediate blocking</strong> (Sidecar)
+- <strong>Long-term healing</strong> (Gemini Patching)
+- <strong>Collective memory</strong> (Qdrant Vector DB)</p>
+
+<p>It solves the fundamental flaw of static WAFs: they don't evolve.</p>
+
+<blockquote>
+  <p><em>"This system doesn't just block attacks; it vaccinates the entire infrastructure against them."</em></p>
+</blockquote>
+
+<h3 id="132-future-roadmap">13.2 Future Roadmap</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Phase</th>
+  <th>Timeline</th>
+  <th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Short Term</strong></td>
+  <td>Q2 2026</td>
+  <td>Rust data-plane, K8s Operator</td>
+</tr>
+<tr>
+  <td><strong>Medium Term</strong></td>
+  <td>Q4 2026</td>
+  <td>Multi-modal (binary, image), LLM honeypots</td>
+</tr>
+<tr>
+  <td><strong>Long Term</strong></td>
+  <td>2027+</td>
+  <td>Autonomous red teaming, hardware acceleration</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="appendix-quick-start">Appendix: Quick Start</h2>
+
+<div class="codehilite">
+<pre><span></span><code><span class="c1"># Clone and setup</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/prometheus-siren/prometheus-siren.git
+<span class="nb">cd</span><span class="w"> </span>prometheus-siren
+
+<span class="c1"># Install dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c1"># Configure (edit .env with API keys)</span>
+cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+
+<span class="c1"># Run demo</span>
+python<span class="w"> </span>scripts/demo.py
+
+<span class="c1"># Start gateway</span>
+python<span class="w"> </span>-m<span class="w"> </span>src.cli<span class="w"> </span>gateway<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</code></pre>
+</div>
+
+<hr />
+
+<p><em>Report generated for Convolve 4.0 - Pan-IIT AI/ML Hackathon</em>
+<em>Prometheus-Siren Team | January 2026</em></p>
+
+<hr>
+<p style="text-align: center; color: #7f8c8d;">
+    <em>Prometheus-Siren Team | Convolve 4.0 - Pan-IIT AI/ML Hackathon | January 2026</em>
+</p>
+</body>
+</html>

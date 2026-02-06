@@ -1,0 +1,13 @@
+[package]
+name = "ebpf_shield"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aya = { version = "0.11", features = ["async_tokio"] }
+aya-ebpf = "0.1.0"
+aya-log-ebpf = "0.1.0"
+
+[[bin]]
+name = "ebpf_shield"
+path = "src/main.rs"

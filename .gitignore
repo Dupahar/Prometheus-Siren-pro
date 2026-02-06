@@ -26,13 +26,6 @@ ENV/
 env/
 .venv/
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
 # Environment (IMPORTANT: Never commit API keys)
 .env
 .env.local
@@ -42,7 +35,9 @@ env/
 logs/
 *.log
 *.txt
-verification.log
+# Keep specific text files if critical (e.g., requirements.txt is not ignored)
+!requirements.txt
+!problem_statement.txt
 
 # Testing
 .pytest_cache/
@@ -51,36 +46,29 @@ htmlcov/
 .tox/
 .nox/
 
-# Docker
-docker-compose.override.yml
+# IDE
+.idea/
+.vscode/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Qdrant local data
+# Qdrant data
 qdrant_data/
+users.db
+mission_log.jsonl
 
-# ML model checkpoints and large models (download separately)
-checkpoint-*/
-distilbert_threat/
+# Large Models
 *.safetensors
-optimizer.pt
+*.pt
+*.bin
 
-# Hackathon PDFs and temporary files (not needed in repo)
+# Hackathon Transient Files
 *.pdf
 *.zip
+*.jsonl
 
-# Old planning documents (keep only final report)
-implementation_plan.md
-phase2_implementation_plan.md
-phase3_implementation_plan.md
-commercialization_report.md
-commercialization_strategy.md
-system_flow.md
-
-# Generated HTML (PDF should be shared via Google Drive)
-report/*.html
-
-# Submission checklist (local use only)
-SUBMISSION_CHECKLIST.md
+# Temporary Scripts/Reports (Optional: Comment out if you want to keep them)
+# demo_*.txt
+# test_*.txt
