@@ -8,6 +8,8 @@
 [![Qdrant](https://img.shields.io/badge/Qdrant-Vector%20DB-purple.svg)](https://qdrant.tech/)
 [![Gemini](https://img.shields.io/badge/Gemini-AI-orange.svg)](https://ai.google.dev/)
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=Dupahar/Prometheus-Siren-pro&branch=main&mainModule=dashboard.py)
+
 ---
 
 ## 🎯 Problem Statement
