@@ -12,9 +12,12 @@ import typer
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
+import asyncio
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from src.prometheus.researcher import researcher as deep_researcher
 
 app = typer.Typer(
     name="prometheus-siren",
@@ -334,6 +337,31 @@ def ml_status():
     except Exception:
         pass
 
+
+@app.command()
+def research(
+    target: str = typer.Argument(..., help="Threat signature or topic to investigate"),
+):
+    """
+    🕵️ Launch a Deep Research mission on a specific threat.
+    """
+    banner()
+    console.print(f"[bold cyan]🚀 Launching Deep Research Agent for:[/bold cyan] {target}")
+    
+    with console.status("[bold green]Agent is Planning & Searching...[/bold green]"):
+        report = deep_researcher.investigate(target)
+    
+    console.print("\n[bold yellow]📋 Mission Report[/bold yellow]")
+    console.print(Panel(report.findings, title="Findings", border_style="green"))
+    
+    table = Table(title="Sources")
+    table.add_column("URL/Source", style="cyan")
+    for source in report.sources:
+        table.add_row(source)
+    console.print(table)
+    
+    console.print(Panel(report.suggested_action, title="RECOMMENDED ACTION", border_style="bold red"))
+    console.print(f"[dim]Confidence: {report.confidence:.0%}[/dim]\n")
 
 @app.command()
 def test():

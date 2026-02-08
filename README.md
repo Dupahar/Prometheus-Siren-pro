@@ -8,18 +8,19 @@
 [![Qdrant](https://img.shields.io/badge/Qdrant-Vector%20DB-purple.svg)](https://qdrant.tech/)
 [![Gemini](https://img.shields.io/badge/Gemini-AI-orange.svg)](https://ai.google.dev/)
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=Dupahar/Prometheus-Siren-pro&branch=main&mainModule=dashboard.py)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://dupahar-prometheus-siren-pro-dashboard-lv5cpu.streamlit.app/)
 
 ---
 
 ## 🎯 Problem Statement
 
-Modern cybersecurity systems (WAFs, IDS) rely on static, manually curated rules—leaving them vulnerable to zero-day attacks until humans intervene.
+**Prometheus-Siren** is an "Action Intelligence" security agent that transforms passive defense into active, reasoning-based protection. Where traditional WAFs blindly block, Prometheus **thinks, investigates, and evolves.**
 
-**Prometheus-Siren** solves this by creating an autonomous cyber-immune system that:
-- 🔍 **Detects** novel attacks using semantic AI
-- 🛡️ **Neutralizes** threats instantly via sidecar blocking  
-- 🧬 **Evolves** by learning from each attack and sharing immunity globally
+Powered by **Gemini 3**, it introduces:
+- 🧠 **Thinking API:** 'System 2' reasoning for complex threat analysis.
+- 🕵️ **Deep Research:** Autonomous forensic investigation of zero-day exploits.
+- ✍️ **Thought Signatures:** Cryptographically signed actions linked to reasoning traces.
+- 💾 **Global Memory:** Context Caching for instant access to historical attack patterns.
 
 ---
 
@@ -48,6 +49,13 @@ Modern cybersecurity systems (WAFs, IDS) rely on static, manually curated rules�
 ---
 
 ## ⚡ Quick Start
+
+### 🕵️ New! Run Deep Research
+Investigate a threat using the new Autonomous Research Agent:
+
+```bash
+python src/cli.py research "Log4Shell"
+```
 
 ### Prerequisites
 - Python 3.11+

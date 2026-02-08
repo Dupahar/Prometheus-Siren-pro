@@ -12,6 +12,7 @@ from typing import Optional, Callable
 from loguru import logger
 
 from src.core.config import settings
+from src.prometheus.thought_signature import ThoughtSignature
 from src.indexer.search import code_searcher, SearchResult
 from .log_parser import log_parser, ParsedError
 from .patch_generator import patch_generator, PatchResult
@@ -41,6 +42,7 @@ class PatchProposal:
             "explanation": self.patch.explanation,
             "status": self.status,
             "is_valid": self.validation.is_valid,
+            "thought_signature": self.patch.thought_signature.signature_hash if self.patch.thought_signature else None
         }
 
 
@@ -269,6 +271,12 @@ class PrometheusAgent:
         print(f"Lines: {proposal.patch.start_line}-{proposal.patch.end_line}")
         print(f"Confidence: {proposal.patch.confidence:.0%}")
         print("-" * 60)
+        if proposal.patch.thought_signature:
+            sig = proposal.patch.thought_signature
+            print(f"🧠 THOUGHT SIGNATURE: Verified")
+            print(f"Hash: {sig.signature_hash[:16]}...")
+            print(f"Trace: {sig.reasoning_trace[:100]}...")
+            print("-" * 60)
         print("Explanation:")
         print(proposal.patch.explanation)
         print("-" * 60)

@@ -34,6 +34,11 @@ class Settings(BaseSettings):
     embedding_model: str = Field(default="text-embedding-004", description="Gemini embedding model")
     embedding_dimension: int = Field(default=768, description="Embedding vector dimension")
     
+    # --- Gemini 3 Advanced Features ---
+    thinking_level: str = Field(default="high", description="Gemini 2.0 Thinking Level (low/high)")
+    context_cache_ttl: int = Field(default=300, description="Context Cache TTL in seconds")
+    research_agent_enabled: bool = Field(default=True, description="Enable Deep Research Agent")
+    
     # --- Prometheus Configuration ---
     prometheus_log_path: str = Field(default="./logs/app.log", description="Path to application logs")
     prometheus_approval_required: bool = Field(default=True, description="Require human approval for patches")
