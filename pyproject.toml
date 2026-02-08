@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prometheus-siren"
+version = "0.1.0"
+<<<<<<< HEAD
+description = "Self-Evolving Cyber-Immune System - Convolve 4.0 Hackathon"
+=======
+description = "A Self-Evolving Cyber-Immune System powered by Qdrant and Gemini"
+>>>>>>> fresh_submission
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Team Prometheus"}
+]
+keywords = ["cybersecurity", "ai", "qdrant", "gemini", "honeypot", "auto-patching"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.scripts]
+prometheus-siren = "src.cli:app"
+ps-demo = "scripts.demo:main"
+ps-index = "scripts.index_codebase:main"
+ps-prometheus = "scripts.run_prometheus:main"
+ps-siren = "scripts.run_siren:main"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]

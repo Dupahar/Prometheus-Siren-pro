@@ -1,0 +1,91 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment (IMPORTANT: Never commit API keys)
+.env
+.env.local
+.env.*.local
+
+# Logs and temp files
+logs/
+*.log
+*.txt
+verification.log
+
+# Keep specific text files if critical (e.g., requirements.txt is not ignored)
+!requirements.txt
+!problem_statement.txt
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Qdrant data
+qdrant_data/
+users.db
+mission_log.jsonl
+
+# ML model checkpoints and large models
+checkpoint-*/
+distilbert_threat/
+*.safetensors
+optimizer.pt
+*.pt
+*.bin
+
+# Hackathon Transient Files
+*.pdf
+*.zip
+*.jsonl
+
+# Old planning documents (keep only final report)
+implementation_plan.md
+phase2_implementation_plan.md
+phase3_implementation_plan.md
+commercialization_report.md
+commercialization_strategy.md
+system_flow.md
+report/*.html
+SUBMISSION_CHECKLIST.md
